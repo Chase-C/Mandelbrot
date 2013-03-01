@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <allegro5/allegro.h>
 #include <complex>
 #include <vector>
 #include <functional>
@@ -29,6 +31,10 @@ void get_number_iterations(Window<int> &scr, Window<double> &fract, int iter_max
             std::complex<double> c((double) j, (double) i);
             c = Scale(scr, fract, c);
             colors[k] = Escape(c, iter_max, func);
+            //std::tuple<int, int, int> rgb = RGB_Piecewise_Linear(colors[k], iter_max);
+            std::tuple<int, int, int> rgb = RGB_Smooth(colors[k], iter_max);
+            //printf("%i, %i\n", j, i);
+            al_put_pixel(j, i, al_map_rgb(std::get<0>(rgb), std::get<1>(rgb), std::get<2>(rgb)));
             k++;
         }
     }
@@ -44,7 +50,7 @@ void Fractal(Window<int> &scr, Window<double> &fract, int iter_max, std::vector<
 void Mandelbrot()
 {
     // Define the size of the image
-    Window<int> scr(0, 1200, 0, 1200);
+    Window<int> scr(0, 800, 0, 600);
     // Define the domain in which we test for points
     Window<double> fract(-2.2, 1.2, -1.7, 1.7);
 

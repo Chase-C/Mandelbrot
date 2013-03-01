@@ -5,8 +5,8 @@
 
 std::complex<double> Scale(Window<int> &scr, Window<double> &fract, std::complex<double> c)
 {
-    std::complex aux(c.real() / (double)scr.width() * fract.width() + fract.xMin(),
-                     c.imag() / (double)scr.height() * fract.height() + fract.yMin());
+    std::complex<double> aux(c.real() / (double)scr.width() * fract.width() + fract.xMin(),
+                            c.imag() / (double)scr.height() * fract.height() + fract.yMin());
     return aux;
 }
 
