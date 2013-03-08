@@ -1,6 +1,6 @@
-GCC			= g++ -std=c++11 -O3
-LIBS		= -lallegro-5.0.8-monolith-md
-SOURCES		= main.cpp Mandelbrot.cpp Utils.cpp
+GCC			= g++ -std=c++11 -O0
+LIBS		= -lallegro-5.0.9-monolith-md
+SOURCES		= code/main.cpp code/Mandelbrot.cpp code/Thread.cpp code/Utils.cpp
 EXECS		= Mandelbrot
 
 ${EXECS} : ${SOURCES}
