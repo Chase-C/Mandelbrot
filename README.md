@@ -1,4 +1,4 @@
 Mandelbrot
 ==========
 
-A multithreaded mandelbrot factal generator that uses the Allegro game programming library.
+A multithreaded mandelbrot fractal generator that uses the Allegro game programming library.
