@@ -33,7 +33,6 @@ void get_number_iterations(Window<int> &scr, Window<double> &fract, int iter_max
             colors[k] = Escape(c, iter_max, func);
             //std::tuple<int, int, int> rgb = RGB_Piecewise_Linear(colors[k], iter_max);
             std::tuple<int, int, int> rgb = RGB_Smooth(colors[k], iter_max);
-            //printf("%i, %i\n", j, i);
             al_put_pixel(j, i, al_map_rgb(std::get<0>(rgb), std::get<1>(rgb), std::get<2>(rgb)));
             al_flip_display();
             k++;

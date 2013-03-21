@@ -10,8 +10,11 @@
 
 using namespace std;
 
-ALLEGRO_EVENT_QUEUE *AllegroInit();
-
+/*
+ * Scans one line of stdin for a value of the type specified
+ * by format and returns that value as type T.
+ *
+ */
 template <typename T>
 T GetVal(string str, const char *format, T curr)
 {
@@ -30,6 +33,7 @@ T GetVal(string str, const char *format, T curr)
 
 void EditWindowSize(DISPLAY_DATA *data)
 {
+    // Make sure object data can only be changed by one thread.
     al_lock_mutex(data->mutex);
     data->sizeX = GetVal<int>("window width", "%i", data->sizeX);
     data->sizeY = GetVal<int>("window height", "%i", data->sizeY);
@@ -58,6 +62,7 @@ int main(int argc, char **argv)
 
     bool run = true;
     while(run) {
+        // Print the main menu for the program.
         printf("Current Window Size: %i x %i\n", data->sizeX, data->sizeY);
         printf("Current Zoom: [%f, %f] [%f, %f]\n\n", data->zoomXmin, data->zoomYmin,
                                                           data->zoomXmax, data->zoomYmax);
@@ -72,7 +77,7 @@ int main(int argc, char **argv)
             break;
         } else if(scanCount != 1) {
             fprintf(stderr, "Not valid input\n\n");
-            fflush(stdin);
+            fflush(NULL);
             continue;
         }
 
@@ -84,6 +89,7 @@ int main(int argc, char **argv)
                 EditZoom(data);
                 break;
             case 3:
+                // Creates a new thread containing the fractal window.
                 threads.push_back(al_create_thread(CreateDisplay, data));
                 al_start_thread(threads.back());
                 break;
@@ -92,6 +98,7 @@ int main(int argc, char **argv)
                 break;
         }
 
+        // Checks if any of the created threads should be destroyed.
         for(int i = 0; i < threads.size(); i++) {
             if(al_get_thread_should_stop(threads[i])) {
                 al_destroy_thread(threads[i]);
@@ -100,6 +107,7 @@ int main(int argc, char **argv)
         }
     }
 
+    // Destroys all open threads.
     for(ALLEGRO_THREAD *thr : threads) {
         al_set_thread_should_stop(thr);
         al_destroy_thread(thr);
