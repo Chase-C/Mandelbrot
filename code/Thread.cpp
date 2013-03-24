@@ -7,6 +7,8 @@
 
 ALLEGRO_DISPLAY *AllegroNewDisplay(int x, int y, ALLEGRO_EVENT_QUEUE *queue)
 {
+    al_set_new_display_flags(ALLEGRO_WINDOWED | ALLEGRO_RESIZABLE | ALLEGRO_NOFRAME);
+
     ALLEGRO_DISPLAY *display = al_create_display(x, y);
     if(!display) {
         fprintf(stderr, "failed to create display!\n");

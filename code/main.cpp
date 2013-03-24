@@ -72,6 +72,7 @@ int main(int argc, char **argv)
             break;
         } else if(scanCount != 1) {
             fprintf(stderr, "Not valid input\n\n");
+            fflush(stderr);
             fflush(stdin);
             continue;
         }
